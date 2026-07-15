@@ -399,6 +399,20 @@ Task ownership is automatically assigned during task creation.
 
 ---
 
+# Screenshots
+
+## Swagger Authentication
+
+![Swagger Auth](screenshots/swagger-auth.png)
+
+## Swagger Task APIs
+
+![Swagger Tasks](screenshots/swagger-tasks.png)
+
+## API Response
+
+![Swagger Response](screenshots/swagger-response.png)
+
 # Future Improvements
 
 - Docker containerization
