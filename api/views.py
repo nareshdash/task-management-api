@@ -26,7 +26,7 @@ class TaskViewSet(ModelViewSet):
         user = self.request.user
 
         if hasattr(user, 'userprofile') and user.userprofile.role == 'admin':
-            return Task.objects.all()
+            return Task.objects.all().order_by('-id')
 
         return Task.objects.filter(user=user)
 

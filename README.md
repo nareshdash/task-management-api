@@ -274,7 +274,7 @@ Request:
 ```json
 {
     "username": "demo",
-    "password": "password"
+    "password": "demo@123"
 }
 ```
 
