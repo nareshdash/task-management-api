@@ -6,7 +6,8 @@ This project demonstrates backend development practices including JWT authentica
 
 ---
 
-# Features
+# 🚀 Features
+
 - Dockerized application for easy setup
 
 ## Authentication
@@ -20,7 +21,7 @@ This project demonstrates backend development practices including JWT authentica
 ### Admin
 - View all tasks
 - Manage all users' tasks
-- Full access based on permissions
+- Full access
 
 ### User
 - Create tasks
@@ -47,8 +48,7 @@ This project demonstrates backend development practices including JWT authentica
 
 ---
 
-# Tech Stack
-- Docker
+# 🛠 Tech Stack
 
 ## Backend
 - Python 3.10+
@@ -58,11 +58,15 @@ This project demonstrates backend development practices including JWT authentica
 ## Database
 - PostgreSQL
 
+## DevOps
+- Docker
+- Docker Compose
+
 ## Authentication
 - djangorestframework-simplejwt
 
 ## Documentation
-- drf-yasg Swagger UI
+- drf-yasg (Swagger UI)
 - ReDoc
 
 ## Additional Packages
@@ -71,255 +75,281 @@ This project demonstrates backend development practices including JWT authentica
 
 ---
 
-# Project Structure
+# 📂 Project Structure
 
 task_api_project/
 
-├── api/
-│   ├── models.py
-│   ├── serializers.py
-│   ├── views.py
-│   ├── permissions.py
-│   ├── urls.py
-│   └── tests/
-│       ├── test_auth.py
-│       ├── test_tasks.py
-│       └── test_permissions.py
-│
-├── task_api_project/
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-│   └── asgi.py
-│
-├── manage.py
-├── requirements.txt
-├── README.md
-├── .gitignore
-└── .env.example
+├── api/  
+│   ├── models.py  
+│   ├── serializers.py  
+│   ├── views.py  
+│   ├── permissions.py  
+│   ├── urls.py  
+│   └── tests/  
+│       ├── test_auth.py  
+│       ├── test_tasks.py  
+│       └── test_permissions.py  
+│  
+├── core/  
+│   ├── settings.py  
+│   ├── urls.py  
+│   ├── wsgi.py  
+│   └── asgi.py  
+│  
+├── manage.py  
+├── Dockerfile  
+├── docker-compose.yml  
+├── requirements.txt  
+├── .env.example  
+└── README.md  
 
 ---
 
-# Installation & Setup
+# ⚙️ Installation & Setup (Local)
 
-1. Clone Repository
-git clone https://github.com/nareshdash/task-management-api.git
-cd task-management-api
+1. Clone Repository  
+git clone https://github.com/nareshdash/task-management-api.git  
+cd task-management-api  
 
-2. Create Virtual Environment
+2. Create Virtual Environment  
 
-Linux / Mac:
-python3 -m venv venv
-source venv/bin/activate
+Linux / Mac:  
+python3 -m venv venv  
+source venv/bin/activate  
 
-Windows:
-python -m venv venv
-venv\Scripts\activate
+Windows:  
+python -m venv venv  
+venv\Scripts\activate  
 
-3. Install Dependencies
-pip install -r requirements.txt
+3. Install Dependencies  
+pip install -r requirements.txt  
+
+4. Setup Environment Variables (.env)
+
+SECRET_KEY=your_secret_key  
+DEBUG=True  
+DB_NAME=taskdb  
+DB_USER=postgres  
+DB_PASSWORD=postgres  
+DB_HOST=localhost  
+DB_PORT=5432  
+
+5. Run Migrations  
+python manage.py migrate  
+
+6. Create Superuser  
+python manage.py createsuperuser  
+
+7. Run Server  
+python manage.py runserver  
 
 ---
 
-# Docker Setup
+# 🐳 Docker Setup (Recommended)
 
 This project is fully containerized using Docker and Docker Compose.
 
 ## Run with Docker
 
-1. Build and start containers:
+1. Build and start containers:  
+docker compose up --build  
 
-docker compose up --build
+2. Apply migrations:  
+docker compose exec web python manage.py migrate  
 
-2. Run database migrations:
+3. Create superuser:  
+docker compose exec web python manage.py createsuperuser  
 
-docker compose exec web python manage.py migrate
+---
 
-3. Create superuser:
+## Access Application
 
-docker compose exec web python manage.py createsuperuser
+API Root:  
+http://127.0.0.1:8000/api/
 
-4. Access the application:
-
-API:
-http://127.0.0.1:8000/
-
-Swagger Docs:
+Swagger Docs:  
 http://127.0.0.1:8000/swagger/
 
-ReDoc:
+ReDoc:  
 http://127.0.0.1:8000/redoc/
+
+---
 
 ## Services
 
-- web: Django application
-- db: PostgreSQL database
-
-## Notes
-
-- PostgreSQL runs inside Docker container
-- Django connects using DB_HOST=db
-- No local database setup required
+- web → Django application  
+- db → PostgreSQL database  
 
 ---
 
-# PostgreSQL Database Setup
+## Important Notes
 
-CREATE DATABASE taskdb;
-CREATE USER taskuser WITH PASSWORD 'your_password';
-GRANT ALL PRIVILEGES ON DATABASE taskdb TO taskuser;
-
----
-
-# Environment Configuration
-
-Create .env file:
-
-SECRET_KEY=your_secret_key
-DEBUG=True
-DB_NAME=taskdb
-DB_USER=taskuser
-DB_PASSWORD=your_password
-DB_HOST=localhost
-DB_PORT=5432
+- PostgreSQL runs inside Docker container  
+- Django connects using DB_HOST=db inside Docker  
+- Do NOT use localhost inside Docker  
 
 ---
 
-# Database Migration
+# 📌 API Endpoints
 
-python manage.py makemigrations
-python manage.py migrate
-
----
-
-# Create Admin User
-
-python manage.py createsuperuser
-
-Admin Panel:
-http://127.0.0.1:8000/admin/
+Base URL:  
+http://127.0.0.1:8000/api/
 
 ---
 
-# Run Development Server
+## 🔐 Authentication
 
-python manage.py runserver
-
----
-
-# API Documentation
-
-Swagger:
-http://127.0.0.1:8000/swagger/
-
-ReDoc:
-http://127.0.0.1:8000/redoc/
-
----
-
-# Authentication
-
-Register:
+### Register  
 POST /api/register/
 
-Login:
-POST /api/login/
-
-Refresh Token:
-POST /api/refresh/
-
-Use Token:
-Authorization: Bearer <access_token>
+Request:
+{
+  "username": "john",
+  "password": "password123"
+}
 
 ---
 
-# API Endpoints
-
-Authentication:
-POST /api/register/
+### Login  
 POST /api/login/
+
+Request:
+{
+  "username": "john",
+  "password": "password123"
+}
+
+Response:
+{
+  "access": "your_access_token",
+  "refresh": "your_refresh_token"
+}
+
+---
+
+### Refresh Token  
 POST /api/refresh/
 
-Tasks:
+Request:
+{
+  "refresh": "your_refresh_token"
+}
+
+---
+
+## 📋 Tasks
+
+### List Tasks  
 GET /api/tasks/
+
+### Create Task  
 POST /api/tasks/
+
+Request:
+{
+  "title": "My Task",
+  "description": "Task description",
+  "is_completed": false
+}
+
+### Retrieve Task  
 GET /api/tasks/{id}/
+
+### Update Task  
 PUT /api/tasks/{id}/
+
+### Partial Update  
 PATCH /api/tasks/{id}/
+
+### Delete Task  
 DELETE /api/tasks/{id}/
+
+### Toggle Task Completion  
 POST /api/tasks/{id}/toggle/
 
 ---
 
-# Filtering
+# 🔍 Filtering
 
-GET /api/tasks/?is_completed=true
-GET /api/tasks/?is_completed=false
-
----
-
-# Search
-
-GET /api/tasks/?search=meeting
+GET /api/tasks/?is_completed=true  
+GET /api/tasks/?is_completed=false  
 
 ---
 
-# Pagination
+# 🔎 Search
 
-GET /api/tasks/?page=2
-
----
-
-# Testing
-
-python manage.py test
-
-Example Output:
-Ran 7 tests
-OK
+GET /api/tasks/?search=meeting  
 
 ---
 
-# Permission Logic
+# 📄 Pagination
+
+GET /api/tasks/?page=2  
+
+---
+
+# 🔑 Authentication Usage
+
+Authorization: Bearer <access_token>
+
+---
+
+# 🔐 Permission Logic
 
 Admin:
-- Can view all tasks
-- Can manage all tasks
+- Can view all tasks  
+- Can manage all tasks  
 
 User:
-- Can only access their own tasks
+- Can only access their own tasks  
 
 ---
 
-# Security Practices
+# 🧪 Testing
 
-- Environment-based secrets
-- JWT authentication
-- Role-based permissions
-- Password hashing
-- Protected endpoints
+python manage.py test  
 
 ---
 
-# Screenshots
+# 🔒 Security Practices
 
-![Swagger Auth](screenshots/swagger-auth.png)
-![Swagger Tasks](screenshots/swagger-tasks.png)
-![Swagger Response](screenshots/swagger-response.png)
-![Swagger Django admin](screenshots/admin.png)
-
----
-
-# Future Improvements
-
-- Production deployment setup
-- Advanced filtering (priority, due date)
-- Improved role management (admin dashboard)
-- API rate limiting
+- Environment-based secrets  
+- JWT authentication  
+- Role-based permissions  
+- Password hashing  
+- Protected endpoints  
 
 ---
 
-# Author
+# 📖 API Documentation
+
+Swagger:  
+http://127.0.0.1:8000/swagger/
+
+ReDoc:  
+http://127.0.0.1:8000/redoc/
+
+---
+
+# 📸 Screenshots
+
+![Swagger Auth](screenshots/swagger-auth.png)  
+![Swagger Tasks](screenshots/swagger-tasks.png)  
+![Swagger Response](screenshots/swagger-response.png)  
+![Django Admin](screenshots/admin.png)  
+
+---
+
+# 🚀 Future Improvements
+
+- Production deployment setup  
+- Advanced filtering (priority, due date)  
+- Improved role management (admin dashboard)  
+- API rate limiting  
+
+---
+
+# 👨‍💻 Author
 
 Naresh Dash  
 Backend Developer  
