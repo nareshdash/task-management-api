@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:15
+    container_name: task_db
+    restart: always
+    environment:
+      POSTGRES_DB: taskdb
+      POSTGRES_USER: taskuser
+      POSTGRES_PASSWORD: taskpassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  web:
+    build: .
+    container_name: task_api
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_NAME: taskdb
+      DB_USER: taskuser
+      DB_PASSWORD: taskpassword
+      DB_HOST: db
+      DB_PORT: 5432
+
+volumes:
+  postgres_data:

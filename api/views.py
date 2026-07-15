@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from rest_framework import viewsets, generics, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -44,3 +45,7 @@ class TaskViewSet(ModelViewSet):
             'id': task.id,
             'is_completed': task.is_completed
         }, status=status.HTTP_200_OK)
+
+
+def home(request):
+    return HttpResponse("Task Management API is running 🚀")
